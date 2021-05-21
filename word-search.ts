@@ -1,4 +1,4 @@
-enum Direction {
+export enum Direction {
   UP,
   DOWN,
   LEFT,
@@ -45,8 +45,36 @@ export default class WordSearch {
     return words.reduce((acc, word) => ({ ...acc, [word]: this.findWord(word) }), {});
   }
 
-  private findWord(word: string, rowIndex: number = 0, colIndex: number = 0): RelativeCoordinate {
+  public findWord(word: string, rowIndex: number = 0, colIndex: number = 0): RelativeCoordinate | undefined {
+    let startPoint = this.findFirstLetter(word[0], rowIndex, colIndex)
 
+    let relativeCoordinates = this.getRelativeCoordinates(startPoint, word.length)
+    if(typeof relativeCoordinates == 'undefined') return undefined
+
+    for(let relCoord in relativeCoordinates) {
+      let endPoint = this.findEnd(word.slice(1), rowIndex, colIndex)
+      if(endPoint) {
+        return endPoint
+      }
+    }
+
+  }
+
+  public findFirstLetter(letter: string, startRow: number= 0, startCol: number = 0): Point | undefined {
+    const numRow = this.grid.length;
+    const numCol = this.grid[0].length;
+    for(let row = startRow; row < numRow; row++) {
+      // if current row is the starting row, we start from startCol otherwise start from column 0
+      for(let col = row == startRow ? startCol : 0; col < numCol; col++) {
+        if(this.grid[row][col] == letter) {
+          return {
+            x: col,
+            y: row,
+          }
+        }
+      }
+    }
+    return undefined
   }
 
   private findEnd(endWord: string, relativeCoordinates: RelativeCoordinate[]): Point | undefined {
@@ -65,7 +93,48 @@ export default class WordSearch {
     }
   }
 
-  private getRelativeCoordinates(pos: Point, totalWordlength: number) {
 
+  public getRelativeCoordinates(pos: Point, totalWordlength: number) {
+    const { x, y } = pos;
+    const remainingLength = totalWordlength - 1;
+    const fitsWithinTopBound = y - remainingLength >= 0;
+    const fitsWithinBottomBound = y + remainingLength <= this.grid.length - 1;
+    const fitsWithinLeftBound = x - remainingLength >= 0;
+    const fitsWithinRightBound = x + remainingLength <= this.grid[y].length - 1;
+    const result: RelativeCoordinate[] = [];
+
+    if (fitsWithinTopBound) {
+      result.push({ position: move[Direction.UP](pos), direction: Direction.UP });
+    }
+
+    if (fitsWithinBottomBound) {
+      result.push({ position: move[Direction.DOWN](pos), direction: Direction.DOWN });
+    }
+
+    if (fitsWithinLeftBound) {
+      result.push({ position: move[Direction.LEFT](pos), direction: Direction.LEFT });
+    }
+
+    if (fitsWithinRightBound) {
+      result.push({ position: move[Direction.RIGHT](pos), direction: Direction.RIGHT });
+    }
+
+    if (fitsWithinTopBound && fitsWithinLeftBound) {
+      result.push({ position: move[Direction.UP_LEFT](pos), direction: Direction.UP_LEFT });
+    }
+
+    if (fitsWithinTopBound && fitsWithinRightBound) {
+      result.push({ position: move[Direction.UP_RIGHT](pos), direction: Direction.UP_RIGHT });
+    }
+
+    if (fitsWithinBottomBound && fitsWithinLeftBound) {
+      result.push({ position: move[Direction.DOWN_LEFT](pos), direction: Direction.DOWN_LEFT });
+    }
+
+    if (fitsWithinBottomBound && fitsWithinRightBound) {
+      result.push({ position: move[Direction.DOWN_RIGHT](pos), direction: Direction.DOWN_RIGHT });
+    }
+
+    return !result.length ? undefined : result;
   }
 }
