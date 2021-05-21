@@ -26,10 +26,32 @@ type Answer = {
   }
 }
 
+const move = {
+  [Direction.UP]: ({ x, y }: Point): Point => ({ x, y: y - 1}),
+  [Direction.DOWN]: ({ x, y }: Point): Point => ({ x, y: y + 1}),
+  [Direction.LEFT]: ({ x, y }: Point): Point => ({ x: x - 1, y }),
+  [Direction.RIGHT]: ({ x, y }: Point): Point => ({ x: x + 1, y }),
+  [Direction.UP_LEFT]: ({ x, y }: Point): Point => ({ x: x - 1, y: y - 1}),
+  [Direction.UP_RIGHT]: ({ x, y }: Point): Point => ({ x: x + 1, y: y - 1}),
+  [Direction.DOWN_LEFT]: ({ x, y }: Point): Point => ({ x: x - 1, y: y + 1}),
+  [Direction.DOWN_RIGHT]: ({ x, y }: Point): Point => ({ x: x + 1, y: y + 1}),
+}
+
+
 export default class WordSearch {
-  public find(board: string[]) {
-    throw new Error('Implement this function')
-    console.log(board)
+  constructor(private grid: string[]) {}
+
+  public find(words: string[]): Answer {
+    return words.reduce((acc, word) => ({ ...acc, [word]: this.findWord(word) }), {});
   }
 
+  private findWord(word: string, rowIndex: number = 0, colIndex: number = 0): RelativeCoordinate {
+
+  }
+
+  private findEnd(endWord: string, rowIndex: number = 0, colIndex: number = 0): RelativeCoordinate {
+    for (let i = 0; i < ; i++) {
+      
+    }
+  }
 }
