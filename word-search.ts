@@ -47,9 +47,10 @@ export default class WordSearch {
 
   public findWord(word: string, rowIndex: number = 0, colIndex: number = 0): RelativeCoordinate | undefined {
     let startPoint = this.findFirstLetter(word[0], rowIndex, colIndex)
+    if(typeof startPoint == 'undefined') return undefined
 
     let relativeCoordinates = this.getRelativeCoordinates(startPoint, word.length)
-    if(typeof relativeCoordinates == 'undefined') return undefined
+    // if(typeof relativeCoordinates == 'undefined') return undefined
 
     for(let relCoord in relativeCoordinates) {
       let endPoint = this.findEnd(word.slice(1), rowIndex, colIndex)
