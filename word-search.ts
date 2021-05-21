@@ -49,12 +49,22 @@ export default class WordSearch {
 
   }
 
-  private findEnd(endWord: string, rowIndex: number = 0, colIndex: number = 0): RelativeCoordinate {
+  private findEnd(endWord: string, relativeCoordinates: RelativeCoordinate[]): Point | undefined {
     for (let i = 0; i < endWord.length; i++) {
-
-
+      let firstEndWordLetter;
+      for (let j = 0; j < relativeCoordinates.length; j++) {
+        if(this.grid[relativeCoordinates[j].position.x][relativeCoordinates[j].position.y] === endWord[i]) {
+          firstEndWordLetter = { position: { x: relativeCoordinates[j].position.x, y: relativeCoordinates[j].position.y }, direction: relativeCoordinates[j].direction };
+        }
+      }
+      if(firstEndWordLetter) {
+        if(endWord[i+1] === this.grid[move[firstEndWordLetter.direction](firstEndWordLetter.position).x][move[firstEndWordLetter.direction](firstEndWordLetter.position).y]) {
+// TO finish
+        }
+      }
     }
   }
+
   private getRelativeCoordinates(pos: Point, totalWordlength: number) {
 
   }
