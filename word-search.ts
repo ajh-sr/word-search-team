@@ -52,30 +52,15 @@ export default class WordSearch {
     let relativeCoordinates = this.getRelativeCoordinates(startPoint, word.length)
     // if(typeof relativeCoordinates == 'undefined') return undefined
 
-    for(let relCoord in relativeCoordinates) {
-      let endPoint = this.findEnd(word.slice(1), rowIndex, colIndex)
-      if(endPoint) {
-        return endPoint
-      }
-    }
 
-  }
+    let endPoint = this.findEnd(word.slice(1), rowIndex, colIndex)
 
-  public findFirstLetter(letter: string, startRow: number= 0, startCol: number = 0): Point | undefined {
-    const numRow = this.grid.length;
-    const numCol = this.grid[0].length;
-    for(let row = startRow; row < numRow; row++) {
-      // if current row is the starting row, we start from startCol otherwise start from column 0
-      for(let col = row == startRow ? startCol : 0; col < numCol; col++) {
-        if(this.grid[row][col] == letter) {
-          return {
-            x: col,
-            y: row,
-          }
-        }
-      }
-    }
-    return undefined
+    if(typeof endPoint !== 'undefined') return {startPoint, endPoint}
+
+
+
+
+
   }
 
   private findEnd(endWord: string, rowIndex: number = 0, colIndex: number = 0): RelativeCoordinate {
