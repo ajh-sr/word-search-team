@@ -30,4 +30,8 @@ export default class WordSearch {
   private findWord(word: string, rowIndex: number = 0, colIndex: number = 0): RelativeCoordinate {
 
   }
+
+  private getRelativeCoordinates(pos: Point, totalWordlength: number) {
+
+  }
 }
