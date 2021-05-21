@@ -49,9 +49,14 @@ export default class WordSearch {
 
   }
 
+<<<<<<< HEAD
   private findEnd(endWord: string, rowIndex: number = 0, colIndex: number = 0): RelativeCoordinate {
     for (let i = 0; i < ; i++) {
       
     }
+=======
+  private getRelativeCoordinates(pos: Point, totalWordlength: number) {
+
+>>>>>>> 6e9bb05173e49bc49f11ec8060ee2a321b9a925b
   }
 }
