@@ -1,5 +1,10 @@
 import WordSearch from './word-search'
 
+
+describe('findWord', ()=> {
+
+})
+
 describe('single line grids', () => {
   test('Should accept an initial game grid', () => {
     const grid = ['jefblpepre']

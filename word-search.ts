@@ -45,18 +45,19 @@ export default class WordSearch {
     return words.reduce((acc, word) => ({ ...acc, [word]: this.findWord(word) }), {});
   }
 
-  private findWord(word: string, rowIndex: number = 0, colIndex: number = 0): RelativeCoordinate | undefined {
-    let startPoint = findFirstLetter(word[0], rowIndex, colIndex)
+  public findWord(word: string, rowIndex: number = 0, colIndex: number = 0): RelativeCoordinate | undefined {
+    let startPoint = this.findFirstLetter(word[0], rowIndex, colIndex)
 
     let relativeCoordinates = this.getRelativeCoordinates(startPoint, word.length)
     if(typeof relativeCoordinates == 'undefined') return undefined
 
     for(let relCoord in relativeCoordinates) {
-      let endPoint = this.findEnd(word.slice(1),relCoord)
+      let endPoint = this.findEnd(word.slice(1), rowIndex, colIndex)
       if(endPoint) {
         return endPoint
       }
     }
+
   }
 
   private findEnd(endWord: string, rowIndex: number = 0, colIndex: number = 0): RelativeCoordinate {
