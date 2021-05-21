@@ -9,8 +9,27 @@ enum Direction {
   DOWN_RIGHT,
 }
 
-export default class WordSearch {
-  public find(words: string[]) {
-    throw new Error('Implement this function')
+type Point = {
+  x: number,
+  y: number,
+}
+
+type RelativeCoordinate = {
+  position: Point,
+  direction: Direction
+}
+
+type Answer = {
+  [word: string]: {
+    start: number[],
+    end: number[],
   }
+}
+
+export default class WordSearch {
+  public find(board: string[]) {
+    throw new Error('Implement this function')
+    console.log(board)
+  }
+
 }
